@@ -184,6 +184,67 @@ impl Web3 {
 
         Ok(r)
     }
+
+    pub async fn eth_get_block_transaction_count_by_number(
+        &self,
+        number: &str,
+    ) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getBlockTransactionCountByNumber", "params": [number], "id": "315" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_uncle_count_by_block_hash(
+        &self,
+        hash: &str,
+    ) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getUncleCountByBlockHash", "params": [hash], "id": "316" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_uncle_count_by_block_number(
+        &self,
+        number: &str,
+    ) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getUncleCountByBlockNumber", "params": [number], "id": "317" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_code(
+        &self,
+        address: &str,
+        tag: Option<Tag>,
+    ) -> anyhow::Result<JsonRpcResult<String>> {
+        let mut t = String::from(Tag::Latest);
+        if let Some(tag) = tag {
+            t = String::from(tag);
+        }
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getCode", "params": [address, t], "id": "318" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_sign(
+        &self,
+        address: &str,
+        data: &str,
+    ) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_sign", "params": [address, data], "id": "319" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
 }
 
 #[cfg(test)]

@@ -57,10 +57,44 @@ async fn main() -> anyhow::Result<()> {
         .await?;
     println!("{:?}", r);
 
-    let r = rpc
+    match rpc
         .eth_get_block_transaction_count_by_hash(
             "0xe812a49745d691961893d7cfd3902d78d710751bab872f12215ee23f27f3efa9",
         )
+        .await
+    {
+        Ok(r) => {
+            println!("{:?}", r);
+        }
+        Err(e) => {
+            println!("{:?}", e);
+        }
+    }
+
+    /*let rpc =
+        Web3::new("https://mainnet.infura.io/v3/ab0e57bf11aa4ac2aef7091710de352f".to_string());
+    let r = rpc
+        .eth_get_block_transaction_count_by_number("0xdf969d")
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_get_uncle_count_by_block_hash(
+            "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238",
+        )
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc.eth_get_uncle_count_by_block_number("0xdf969d").await?;
+    println!("{:?}", r);*/
+
+    /*let r = rpc
+        .eth_get_code("0xc00e94cb662c3520282e6f5717214004a7f26888", None)
+        .await?;
+    println!("{:?}", r);*/
+
+    let r = rpc
+        .eth_sign("0x846c4dc9f4e2514206ef179eaa0bcfae007e37d2", "0x84")
         .await?;
     println!("{:?}", r);
 
