@@ -6,7 +6,7 @@ Add this to your Cargo.toml
 
 ```toml
 [dependencies]
-web3-rpc = "0.1.3"
+web3-rpc = "0.1.4"
 ```
 
 ```rust
@@ -84,8 +84,7 @@ async fn main() -> anyhow::Result<()> {
         }
     }
 
-    /*let rpc =
-        Web3::new("https://mainnet.infura.io/v3/ab0e57bf11aa4ac2aef7091710de352f".to_string());
+    /*
     let r = rpc
         .eth_get_block_transaction_count_by_number("0xdf969d")
         .await?;

@@ -1,4 +1,5 @@
 use serde_json::json;
+use web3_rpc::client;
 use web3_rpc::model::Tag;
 use web3_rpc::web3::Web3;
 
@@ -72,8 +73,7 @@ async fn main() -> anyhow::Result<()> {
         }
     }
 
-    /*let rpc =
-        Web3::new("https://mainnet.infura.io/v3/ab0e57bf11aa4ac2aef7091710de352f".to_string());
+    /*
     let r = rpc
         .eth_get_block_transaction_count_by_number("0xdf969d")
         .await?;

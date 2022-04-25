@@ -282,7 +282,7 @@ impl Web3 {
 
     pub async fn eth_call(&self, data: Value) -> anyhow::Result<JsonRpcResult<String>> {
         let payload =
-            json!({ "jsonrpc": "2.0", "method": "eth_call", "params": [data], "id": "321" });
+            json!({ "jsonrpc": "2.0", "method": "eth_call", "params": [data], "id": "322" });
         let result = self.client.post(payload).await?;
         let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
 
