@@ -1,3 +1,4 @@
+use serde_json::json;
 use web3_rpc::model::Tag;
 use web3_rpc::web3::Web3;
 
@@ -95,6 +96,23 @@ async fn main() -> anyhow::Result<()> {
 
     let r = rpc
         .eth_sign("0x846c4dc9f4e2514206ef179eaa0bcfae007e37d2", "0x84")
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_send_transaction(
+            "0x846c4dc9f4e2514206ef179eaa0bcfae007e37d2",
+            "0x4e910ef89c176119744977d90093858089454223",
+            "0x76c0",
+            "0x9184e72a000",
+            "0x9184e72a",
+            "0x",
+        )
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_call(json!({"to": "0x846c4dc9f4e2514206ef179eaa0bcfae007e37d2", "data": "0x313ce567"}))
         .await?;
     println!("{:?}", r);
 

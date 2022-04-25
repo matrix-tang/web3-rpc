@@ -1,6 +1,6 @@
 use crate::client::Client;
 use crate::model::{JsonRpcResult, Tag};
-use serde_json::json;
+use serde_json::{json, Value};
 
 #[derive(Clone)]
 pub struct Web3 {
@@ -36,7 +36,7 @@ impl Web3 {
     // net
     pub async fn net_version(&self) -> anyhow::Result<JsonRpcResult<String>> {
         let payload =
-            json!({ "jsonrpc": "2.0", "method": "net_version", "params": [], "id": "301" });
+            json!({ "jsonrpc": "2.0", "method": "net_version", "params": [], "id": "401" });
         let result = self.client.post(payload).await?;
         let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
 
@@ -45,7 +45,7 @@ impl Web3 {
 
     pub async fn net_listening(&self) -> anyhow::Result<JsonRpcResult<bool>> {
         let payload =
-            json!({ "jsonrpc": "2.0", "method": "net_listening", "params": [], "id": "302" });
+            json!({ "jsonrpc": "2.0", "method": "net_listening", "params": [], "id": "402" });
         let result = self.client.post(payload).await?;
         let r: JsonRpcResult<bool> = serde_json::from_str(result.as_str())?;
 
@@ -240,6 +240,49 @@ impl Web3 {
         data: &str,
     ) -> anyhow::Result<JsonRpcResult<String>> {
         let payload = json!({ "jsonrpc": "2.0", "method": "eth_sign", "params": [address, data], "id": "319" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_send_transaction(
+        &self,
+        from: &str,
+        to: &str,
+        gas: &str,
+        gas_price: &str,
+        value: &str,
+        data: &str,
+    ) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_sendTransaction", "params": [{
+            "from": from,
+            "to": to,
+            "gas": gas,
+            "gasPrice": gas_price,
+            "value": value,
+            "data": data
+        }], "id": "320" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_send_raw_transaction(
+        &self,
+        hash: &str,
+    ) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_sendRawTransaction", "params": [hash], "id": "321" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_call(&self, data: Value) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload =
+            json!({ "jsonrpc": "2.0", "method": "eth_call", "params": [data], "id": "321" });
         let result = self.client.post(payload).await?;
         let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
 

@@ -6,10 +6,11 @@ Add this to your Cargo.toml
 
 ```toml
 [dependencies]
-web3-rpc = "0.1.0"
+web3-rpc = "0.1.3"
 ```
 
 ```rust
+use serde_json::json;
 use web3_rpc::model::Tag;
 use web3_rpc::web3::Web3;
 
@@ -69,14 +70,64 @@ async fn main() -> anyhow::Result<()> {
         .await?;
     println!("{:?}", r);
 
-    let r = rpc
+    match rpc
         .eth_get_block_transaction_count_by_hash(
             "0xe812a49745d691961893d7cfd3902d78d710751bab872f12215ee23f27f3efa9",
         )
+        .await
+    {
+        Ok(r) => {
+            println!("{:?}", r);
+        }
+        Err(e) => {
+            println!("{:?}", e);
+        }
+    }
+
+    /*let rpc =
+        Web3::new("https://mainnet.infura.io/v3/ab0e57bf11aa4ac2aef7091710de352f".to_string());
+    let r = rpc
+        .eth_get_block_transaction_count_by_number("0xdf969d")
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_get_uncle_count_by_block_hash(
+            "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238",
+        )
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc.eth_get_uncle_count_by_block_number("0xdf969d").await?;
+    println!("{:?}", r);*/
+
+    /*let r = rpc
+        .eth_get_code("0xc00e94cb662c3520282e6f5717214004a7f26888", None)
+        .await?;
+    println!("{:?}", r);*/
+
+    let r = rpc
+        .eth_sign("0x846c4dc9f4e2514206ef179eaa0bcfae007e37d2", "0x84")
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_send_transaction(
+            "0x846c4dc9f4e2514206ef179eaa0bcfae007e37d2",
+            "0x4e910ef89c176119744977d90093858089454223",
+            "0x76c0",
+            "0x9184e72a000",
+            "0x9184e72a",
+            "0x",
+        )
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_call(json!({"to": "0x846c4dc9f4e2514206ef179eaa0bcfae007e37d2", "data": "0x313ce567"}))
         .await?;
     println!("{:?}", r);
 
     Ok(())
 }
-
 ```
