@@ -1,4 +1,7 @@
 # web3-rpc
+Ethereum JSON-RPC client
+
+<a href="https://crates.io/crates/web3-rpc" rel="nofollow noopener noreferrer"><img src="https://img.shields.io/crates/v/web3-rpc" alt="Crates.io"></a>
 
 ## Usage
 
