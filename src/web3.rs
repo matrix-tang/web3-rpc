@@ -1,10 +1,10 @@
 use crate::client::Client;
-use crate::model::{JsonRpcResult, Tag};
+use crate::model::{Block, JsonRpcResult, Tag, Transaction};
 use serde_json::{json, Value};
 
 #[derive(Clone)]
 pub struct Web3 {
-    client: Client,
+    pub client: Client,
 }
 
 impl Web3 {
@@ -285,6 +285,50 @@ impl Web3 {
             json!({ "jsonrpc": "2.0", "method": "eth_call", "params": [data], "id": "322" });
         let result = self.client.post(payload).await?;
         let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_estimate_gas(&self, data: Value) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload =
+            json!({ "jsonrpc": "2.0", "method": "eth_estimateGas", "params": [data], "id": "323" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_block_by_hash(
+        &self,
+        hash: &str,
+        obj: bool,
+    ) -> anyhow::Result<JsonRpcResult<Block>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getBlockByHash", "params": [hash, obj], "id": "324" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Block> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_block_by_number(
+        &self,
+        number: &str,
+        obj: bool,
+    ) -> anyhow::Result<JsonRpcResult<Block>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [number, obj], "id": "325" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Block> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_transaction_by_hash(
+        &self,
+        hash: &str,
+    ) -> anyhow::Result<JsonRpcResult<Transaction>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getTransactionByHash", "params": [hash], "id": "326" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Transaction> = serde_json::from_str(result.as_str())?;
 
         Ok(r)
     }

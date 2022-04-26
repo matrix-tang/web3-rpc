@@ -6,7 +6,7 @@ Add this to your Cargo.toml
 
 ```toml
 [dependencies]
-web3-rpc = "0.1.5"
+web3-rpc = "0.1.6"
 ```
 
 ```rust
@@ -163,10 +163,10 @@ async fn main() -> anyhow::Result<()> {
 - [x] eth_sendTransaction
 - [x] eth_sendRawTransaction
 - [x] eth_call
-- [ ] eth_estimateGas
-- [ ] eth_getBlockByHash
-- [ ] eth_getBlockByNumber
-- [ ] eth_getTransactionByHash
+- [x] eth_estimate_gas
+- [x] eth_get_block_by_hash
+- [x] eth_get_block_by_number
+- [x] eth_get_transaction_by_hash
 - [ ] eth_getTransactionByBlockHashAndIndex
 - [ ] eth_getTransactionByBlockNumberAndIndex
 - [ ] eth_getTransactionReceipt
@@ -205,3 +205,17 @@ async fn main() -> anyhow::Result<()> {
 - [ ] shh_uninstallFilter
 - [ ] shh_getFilterChanges
 - [ ] shh_getMessages
+
+## Your Self Request
+```rust
+async fn your_self_rest() -> anyhow::Result<JsonRpcResult<Vec<String>>> {
+    // example
+    // eth_accounts
+    let rpc = Web3::new("http://127.0.0.1:8545".to_string());
+    let payload = json!({ "jsonrpc": "2.0", "method": "eth_accounts", "params": [], "id": "310" });
+    let result = rpc.client.post(payload).await?;
+    let r: JsonRpcResult<Vec<String>> = serde_json::from_str(result.as_str())?;
+
+    Ok(r)
+}
+```
