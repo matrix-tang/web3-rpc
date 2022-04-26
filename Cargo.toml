@@ -1,6 +1,6 @@
 [package]
 name = "web3-rpc"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 authors = ["matrix-tang <matrix.tang@outlook.com>"]
 license = "MIT OR Apache-2.0"

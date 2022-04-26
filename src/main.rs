@@ -144,6 +144,18 @@ async fn main() -> anyhow::Result<()> {
         .await?;
     println!("{:?}", r);*/
 
+    let rpc =
+        Web3::new("https://mainnet.infura.io/v3/ab0e57bf11aa4ac2aef7091710de352f".to_string());
+    let r = rpc.eth_block_number().await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_get_transaction_receipt(
+            "0x9aba9e042034f025ebbe9fddde27c2c091afe6bb24d1c6f6418abbb3103519ee",
+        )
+        .await?;
+    println!("{:?}", r);
+
     // your self rest
     let accounts = your_self_rest().await?;
     println!("{:?}", accounts);

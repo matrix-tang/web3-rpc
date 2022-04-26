@@ -9,7 +9,7 @@ Add this to your Cargo.toml
 
 ```toml
 [dependencies]
-web3-rpc = "0.1.6"
+web3-rpc = "0.1.7"
 ```
 
 ```rust
@@ -172,7 +172,7 @@ async fn main() -> anyhow::Result<()> {
 - [x] eth_get_transaction_by_hash
 - [ ] eth_getTransactionByBlockHashAndIndex
 - [ ] eth_getTransactionByBlockNumberAndIndex
-- [ ] eth_getTransactionReceipt
+- [x] eth_get_transaction_receipt
 - [ ] eth_getUncleByBlockHashAndIndex
 - [ ] eth_getUncleByBlockNumberAndIndex
 - [ ] eth_getCompilers
@@ -189,7 +189,7 @@ async fn main() -> anyhow::Result<()> {
 - [ ] eth_getWork
 - [ ] eth_submitWork
 - [ ] eth_submitHashrate
-- [ ] eth_blockNumber
+- [x] eth_blockNumber
 
 #### db
 - [ ] db_putString

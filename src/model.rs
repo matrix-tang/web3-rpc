@@ -95,3 +95,37 @@ pub struct AccessList {
     pub address: String,
     pub storage_keys: Vec<String>,
 }
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct Receipt {
+    pub block_hash: String,
+    pub block_number: String,
+    pub contract_address: Option<String>,
+    pub cumulative_gas_used: String,
+    pub effective_gas_price: String,
+    pub from: String,
+    pub gas_used: String,
+    pub logs: Vec<ReceiptLog>,
+    pub logs_bloom: String,
+    pub status: String,
+    pub to: String,
+    pub transaction_hash: String,
+    pub transaction_index: String,
+    #[serde(rename = "type")]
+    pub receipt_type: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ReceiptLog {
+    pub address: String,
+    pub block_hash: String,
+    pub block_number: String,
+    pub data: String,
+    pub log_index: String,
+    pub removed: bool,
+    pub topics: Vec<String>,
+    pub transaction_hash: String,
+    pub transaction_index: String,
+}

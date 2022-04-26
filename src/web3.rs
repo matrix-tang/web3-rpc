@@ -1,5 +1,5 @@
 use crate::client::Client;
-use crate::model::{Block, JsonRpcResult, Tag, Transaction};
+use crate::model::{Block, JsonRpcResult, Receipt, Tag, Transaction};
 use serde_json::{json, Value};
 
 #[derive(Clone)]
@@ -329,6 +329,26 @@ impl Web3 {
         let payload = json!({ "jsonrpc": "2.0", "method": "eth_getTransactionByHash", "params": [hash], "id": "326" });
         let result = self.client.post(payload).await?;
         let r: JsonRpcResult<Transaction> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_block_number(&self) -> anyhow::Result<JsonRpcResult<String>> {
+        let payload =
+            json!({ "jsonrpc": "2.0", "method": "eth_blockNumber", "params": [], "id": "327" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<String> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_transaction_receipt(
+        &self,
+        hash: &str,
+    ) -> anyhow::Result<JsonRpcResult<Receipt>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getTransactionReceipt", "params": [hash], "id": "328" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Receipt> = serde_json::from_str(result.as_str())?;
 
         Ok(r)
     }
