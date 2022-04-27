@@ -352,6 +352,30 @@ impl Web3 {
 
         Ok(r)
     }
+
+    pub async fn eth_get_transaction_by_block_hash_and_index(
+        &self,
+        hash: &str,
+        index: &str,
+    ) -> anyhow::Result<JsonRpcResult<Transaction>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getTransactionByBlockHashAndIndex", "params": [hash, index], "id": "329" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Transaction> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_transaction_by_block_number_and_index(
+        &self,
+        number: &str,
+        index: &str,
+    ) -> anyhow::Result<JsonRpcResult<Transaction>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getTransactionByBlockNumberAndIndex", "params": [number, index], "id": "330" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Transaction> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
 }
 
 #[cfg(test)]
