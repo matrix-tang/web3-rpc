@@ -376,6 +376,39 @@ impl Web3 {
 
         Ok(r)
     }
+
+    pub async fn eth_get_uncle_by_block_hash_and_index(
+        &self,
+        hash: &str,
+        index: &str,
+    ) -> anyhow::Result<JsonRpcResult<Block>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getUncleByBlockHashAndIndex", "params": [hash, index], "id": "331" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Block> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_uncle_by_block_number_and_index(
+        &self,
+        hash: &str,
+        index: &str,
+    ) -> anyhow::Result<JsonRpcResult<Block>> {
+        let payload = json!({ "jsonrpc": "2.0", "method": "eth_getUncleByBlockNumberAndIndex", "params": [hash, index], "id": "332" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Block> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
+
+    pub async fn eth_get_compilers(&self) -> anyhow::Result<JsonRpcResult<Vec<String>>> {
+        let payload =
+            json!({ "jsonrpc": "2.0", "method": "eth_getCompilers", "params": [], "id": "333" });
+        let result = self.client.post(payload).await?;
+        let r: JsonRpcResult<Vec<String>> = serde_json::from_str(result.as_str())?;
+
+        Ok(r)
+    }
 }
 
 #[cfg(test)]

@@ -169,6 +169,22 @@ async fn main() -> anyhow::Result<()> {
         .await?;
     println!("{:?}", r);
 
+    let r = rpc
+        .eth_get_uncle_by_block_hash_and_index(
+            "0x5cd7861dde444b29a5d362a015795c291b8a51ec7e6bbb6e31ade8cfc96716b9",
+            "0x0",
+        )
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc
+        .eth_get_uncle_by_block_number_and_index("0xdf969d", "0x0")
+        .await?;
+    println!("{:?}", r);
+
+    let r = rpc.eth_get_compilers().await?;
+    println!("{:?}", r);
+
     // your self rest
     let accounts = your_self_rest().await?;
     println!("{:?}", accounts);
